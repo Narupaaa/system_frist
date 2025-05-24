@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบบริหารจัดการธุรกิจ - Mockup</title>
+
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    #app-container {
+        max-width: 1200px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Login Page */
+    #login-page {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    #login-page h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    #login-page div {
+        margin-bottom: 15px;
+    }
+
+    #login-page label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    #login-page input[type="text"],
+    #login-page input[type="password"] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    #login-page button[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    #login-page button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+
+    /* Main App Navbar */
+    #navbar {
+        background-color: #333;
+        padding: 10px 0;
+        margin-bottom: 20px;
+    }
+
+    #navbar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+    }
+
+    #navbar ul li {
+        display: inline-block;
+        margin: 0 10px;
+    }
+
+    #navbar ul li a {
+        color: #fff;
+        text-decoration: none;
+        padding: 8px 15px;
+        border-radius: 3px;
+    }
+
+    #navbar ul li a:hover,
+    #navbar ul li a.active {
+        background-color: #555;
+    }
+
+    /* Content Sections */
+    .content-section {
+        display: none;
+        /* Hidden by default, jQuery will show active */
+        padding: 15px;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-top: 10px;
+    }
+
+    .content-section.active {
+        display: block;
+    }
+
+    .content-section h1 {
+        margin-top: 0;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f0f0f0;
+    }
+
+    table button {
+        padding: 5px 8px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+    /* Forms general */
+    form div {
+        margin-bottom: 10px;
+    }
+
+    form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="tel"],
+    form input[type="number"],
+    form input[type="date"],
+    form input[type="month"],
+    form select,
+    form textarea {
+        width: calc(100% - 22px);
+        /* Account for padding and border */
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+        /* Important for width calculation */
+    }
+
+    form textarea {
+        resize: vertical;
+    }
+
+    form button[type="submit"],
+    form button[type="button"] {
+        padding: 10px 15px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    form button[type="button"] {
+        background-color: #6c757d;
+    }
+
+    form button[type="submit"]:hover {
+        background-color: #218838;
+    }
+
+    form button[type="button"]:hover {
+        background-color: #5a6268;
+    }
+
+    input[placeholder] {
+        /* Make placeholder text slightly lighter */
+        color: #999;
+    }
+
+    /* Customer Form Tabs */
+    .tabs {
+        margin-bottom: 15px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .tab-button {
+        background-color: #f1f1f1;
+        border: 1px solid #ccc;
+        border-bottom: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        margin-right: 2px;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .tab-button.active {
+        background-color: #fff;
+        border-bottom: 1px solid #fff;
+        /* To make it look like it's part of content */
+        position: relative;
+        top: 1px;
+    }
+
+    .tab-content {
+        display: none;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    .contact-person-entry {
+        border: 1px dashed #eee;
+        padding: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .contact-person-entry input[type="text"],
+    .contact-person-entry input[type="tel"],
+    .contact-person-entry input[type="email"] {
+        flex-grow: 1;
+        min-width: 150px;
+        /* Ensure inputs don't get too small */
+    }
+
+
+    /* Quotation Form Items */
+    .qtn-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        border: 1px solid #eee;
+        margin-bottom: 10px;
+    }
+
+    .qtn-item select,
+    .qtn-item input {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    .qtn-item .qtn-product {
+        flex: 3;
+    }
+
+    .qtn-item .qtn-quantity {
+        flex: 1;
+    }
+
+    .qtn-item .qtn-unit-price {
+        flex: 1;
+    }
+
+    .qtn-item .qtn-item-total {
+        flex: 1;
+        font-weight: bold;
+    }
+
+    .qtn-item .btn-remove-qtn-item {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    /* Dashboard Widgets */
+    .dashboard-widgets {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .widget {
+        background-color: #e9ecef;
+        padding: 20px;
+        border-radius: 5px;
+        flex: 1;
+        min-width: 200px;
+        /* Ensure widgets don't get too narrow */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .widget h3 {
+        margin-top: 0;
+    }
+</style>
+
+<body>
+    <div id="app-container">
+        <!-- Login Page (Initially Visible) -->
+        <div id="login-page" class="page">
+            <h2>เข้าสู่ระบบ</h2>
+            <form id="login-form">
+                <div>
+                    <label for="username">ชื่อผู้ใช้:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div>
+                    <label for="password">รหัสผ่าน:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">เข้าสู่ระบบ</button>
+            </form>
+        </div>
+
+        <!-- Main Application Area (Initially Hidden) -->
+        <div id="main-app" class="page" style="display: none;">
+            <nav id="navbar">
+                <ul>
+                    <li><a href="#" data-page="dashboard-page">Dashboard</a></li>
+                    <li><a href="#" data-page="customer-list-page">ลูกค้า</a></li>
+                    <li><a href="#" data-page="product-list-page">สินค้า</a></li>
+                    <li><a href="#" data-page="quotation-list-page">ใบเสนอราคา</a></li>
+                    <li><a href="#" data-page="stock-list-page">สต็อก</a></li>
+                    <li><a href="#" id="logout-button">ออกจากระบบ</a></li>
+                </ul>
+            </nav>
+
+            <main id="main-content">
+                <!-- Dashboard Page Content -->
+                <div id="dashboard-page" class="content-section active">
+                    <h1>Dashboard</h1>
+                    <div class="dashboard-widgets">
+                        <div class="widget">
+                            <h3>ยอด Sale Forecast (เดือนนี้)</h3>
+                            <p>฿X,XXX,XXX</p>
+                        </div>
+                        <div class="widget">
+                            <h3>แจ้งเตือนสต็อก</h3>
+                            <p>สินค้า A ใกล้หมด (5 ชิ้น)</p>
+                        </div>
+                        <div class="widget">
+                            <h3>ใบเสนอราคารอ Follow Up</h3>
+                            <p>3 รายการ</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer List Page Content -->
+                <div id="customer-list-page" class="content-section">
+                    <h1>จัดการข้อมูลลูกค้า</h1>
+                    <button id="btn-add-customer">เพิ่มลูกค้าใหม่</button>
+                    <input type="text" id="search-customer" placeholder="ค้นหาลูกค้า...">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ชื่อบริษัท</th>
+                                <th>ผู้ติดต่อหลัก</th>
+                                <th>เบอร์โทร</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customer-table-body">
+                            <!-- Sample Row (JS will populate this) -->
+                            <tr>
+                                <td>บริษัท ตัวอย่าง จำกัด</td>
+                                <td>คุณสมชาย</td>
+                                <td>081-234-5678</td>
+                                <td>somchai@example.com</td>
+                                <td><button class="btn-edit-customer" data-id="1">แก้ไข</button> <button
+                                        class="btn-view-customer" data-id="1">ดู</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Customer Form Page (Add/Edit) -->
+                <div id="customer-form-page" class="content-section">
+                    <h1 id="customer-form-title">เพิ่มลูกค้าใหม่</h1>
+                    <form id="customer-form">
+                        <input type="hidden" id="customer-id">
+                        <div class="tabs">
+                            <button type="button" class="tab-button active"
+                                data-tab="customer-tab-general">ข้อมูลทั่วไป</button>
+                            <button type="button" class="tab-button" data-tab="customer-tab-address">ที่อยู่</button>
+                            <button type="button" class="tab-button" data-tab="customer-tab-contacts">ผู้ติดต่อ</button>
+                        </div>
+
+                        <div id="customer-tab-general" class="tab-content active">
+                            <h3>ข้อมูลทั่วไป</h3>
+                            <div>
+                                <label for="cust-company-name">ชื่อบริษัท:</label>
+                                <input type="text" id="cust-company-name" required>
+                            </div>
+                            <div>
+                                <label for="cust-tax-id">เลขประจำตัวผู้เสียภาษี:</label>
+                                <input type="text" id="cust-tax-id">
+                            </div>
+                        </div>
+                        <div id="customer-tab-address" class="tab-content">
+                            <h3>ที่อยู่</h3>
+                            <label>สำนักงานใหญ่:</label>
+                            <textarea id="cust-head-office-address" rows="3"></textarea>
+                            <label>ที่อยู่ใช้งานจริง:</label>
+                            <textarea id="cust-actual-site-address" rows="3"></textarea>
+                            <button type="button" id="add-another-site-address" style="display:none;">+
+                                เพิ่มที่อยู่ใช้งานอื่น</button>
+                        </div>
+                        <div id="customer-tab-contacts" class="tab-content">
+                            <h3>ผู้ติดต่อ</h3>
+                            <div id="contact-person-list">
+                                <!-- Contact person fields will be added here by JS -->
+                                <div class="contact-person-entry">
+                                    <input type="text" placeholder="ชื่อผู้ติดต่อ" class="contact-name">
+                                    <input type="text" placeholder="ตำแหน่ง" class="contact-position">
+                                    <input type="tel" placeholder="เบอร์โทร" class="contact-phone">
+                                    <input type="email" placeholder="อีเมล" class="contact-email">
+                                    <label><input type="checkbox" class="contact-is-keyman"> Keyman</label>
+                                </div>
+                            </div>
+                            <button type="button" id="btn-add-contact-person">+ เพิ่มผู้ติดต่อ</button>
+                        </div>
+
+                        <button type="submit">บันทึกข้อมูลลูกค้า</button>
+                        <button type="button" id="btn-cancel-customer-form">ยกเลิก</button>
+                    </form>
+                </div>
+
+                <!-- Product List Page Content -->
+                <div id="product-list-page" class="content-section">
+                    <h1>จัดการข้อมูลสินค้า (Catalog)</h1>
+                    <button id="btn-add-product">เพิ่มสินค้าใหม่</button>
+                    <input type="text" id="search-product" placeholder="ค้นหาสินค้า...">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>รหัสสินค้า (Stock Code)</th>
+                                <th>คำอธิบาย</th>
+                                <th>หมวดหมู่</th>
+                                <th>ราคาขายตั้งต้น</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="product-table-body">
+                            <tr>
+                                <td>PROD-001</td>
+                                <td>สินค้าตัวอย่าง A</td>
+                                <td>Category A</td>
+                                <td>฿1,500</td>
+                                <td><button class="btn-edit-product" data-id="1">แก้ไข</button> <button
+                                        class="btn-view-product" data-id="1">ดู</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Product Form Page (Add/Edit) -->
+                <div id="product-form-page" class="content-section">
+                    <h1 id="product-form-title">เพิ่มสินค้าใหม่</h1>
+                    <form id="product-form">
+                        <input type="hidden" id="product-id">
+                        <div>
+                            <label for="prod-stock-code">รหัสสินค้า (Stock Code):</label>
+                            <input type="text" id="prod-stock-code" required>
+                        </div>
+                        <div>
+                            <label for="prod-description">คำอธิบายสินค้า (สำหรับคนใน):</label>
+                            <textarea id="prod-description" rows="3" required></textarea>
+                        </div>
+                        <div>
+                            <label for="prod-category">หมวดหมู่สินค้า:</label>
+                            <select id="prod-category">
+                                <option value="A">Category A</option>
+                                <option value="B">Category B</option>
+                                <option value="C">Category C</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="prod-cost-price">ราคาต้นทุน (จาก Supplier):</label>
+                            <input type="number" id="prod-cost-price" step="0.01">
+                        </div>
+                        <div>
+                            <label for="prod-selling-price">ราคาขาย (คำนวณ หรือ กรอก):</label>
+                            <input type="number" id="prod-selling-price" step="0.01">
+                        </div>
+                        <div>
+                            <label for="prod-spec-file">ไฟล์ Spec สินค้า:</label>
+                            <input type="file" id="prod-spec-file">
+                        </div>
+                        <button type="submit">บันทึกข้อมูลสินค้า</button>
+                        <button type="button" id="btn-cancel-product-form">ยกเลิก</button>
+                    </form>
+                </div>
+
+
+                <!-- Quotation List Page Content -->
+                <div id="quotation-list-page" class="content-section">
+                    <h1>จัดการใบเสนอราคา (QTN)</h1>
+                    <button id="btn-add-quotation">สร้างใบเสนอราคาใหม่</button>
+                    <input type="text" id="search-quotation" placeholder="ค้นหา QTN...">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>เลขที่ QTN</th>
+                                <th>วันที่</th>
+                                <th>ลูกค้า</th>
+                                <th>มูลค่า</th>
+                                <th>สถานะ</th>
+                                <th>Chance %</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quotation-table-body">
+                            <tr>
+                                <td>QTN-2023-001</td>
+                                <td>2023-10-26</td>
+                                <td>บริษัท ตัวอย่าง จำกัด</td>
+                                <td>฿25,000</td>
+                                <td>กำลังพิจารณาสเปก</td>
+                                <td>70%</td>
+                                <td><button class="btn-edit-quotation" data-id="1">แก้ไข</button> <button
+                                        class="btn-view-quotation" data-id="1">ดู</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Quotation Form Page (Add/Edit) -->
+                <div id="quotation-form-page" class="content-section">
+                    <h1 id="quotation-form-title">สร้างใบเสนอราคาใหม่</h1>
+                    <form id="quotation-form">
+                        <input type="hidden" id="quotation-id">
+                        <div>
+                            <label for="qtn-customer">ลูกค้า:</label>
+                            <select id="qtn-customer" required>
+                                <!-- Populate with JS from customer data -->
+                                <option value="1">บริษัท ตัวอย่าง จำกัด</option>
+                                <option value="2">บริษัท รักไทย จำกัด</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="qtn-date">วันที่:</label>
+                            <input type="date" id="qtn-date" required>
+                        </div>
+                        <h3>รายการสินค้า</h3>
+                        <div id="qtn-item-list">
+                            <div class="qtn-item">
+                                <select class="qtn-product">
+                                    <option value="prod001">สินค้าตัวอย่าง A (PROD-001)</option>
+                                    <option value="prod002">สินค้าตัวอย่าง B (PROD-002)</option>
+                                </select>
+                                <input type="number" class="qtn-quantity" placeholder="จำนวน" min="1" value="1">
+                                <input type="number" class="qtn-unit-price" placeholder="ราคาต่อหน่วย" step="0.01">
+                                <span class="qtn-item-total">฿0.00</span>
+                                <button type="button" class="btn-remove-qtn-item">ลบ</button>
+                            </div>
+                        </div>
+                        <button type="button" id="btn-add-qtn-item">+ เพิ่มรายการสินค้า</button>
+                        <div>
+                            <label for="qtn-status">สถานะ:</label>
+                            <select id="qtn-status">
+                                <option>ลูกค้ารับ PR แล้ว</option>
+                                <option>กำลังพิจารณาสเปกสินค้า</option>
+                                <option>งานรอการพิจารณา</option>
+                                <option>ชนะ</option>
+                                <option>แพ้</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="qtn-chance">โอกาสปิดการขาย (%):</label>
+                            <input type="number" id="qtn-chance" min="0" max="100">
+                        </div>
+                        <div>
+                            <label for="qtn-expected-month">เดือนที่คาดว่าจะปิดการขาย:</label>
+                            <input type="month" id="qtn-expected-month">
+                        </div>
+                        <button type="submit">บันทึกใบเสนอราคา</button>
+                        <button type="button" id="btn-cancel-quotation-form">ยกเลิก</button>
+                    </form>
+                </div>
+
+
+                <!-- Stock List Page Content -->
+                <div id="stock-list-page" class="content-section">
+                    <h1>ภาพรวมสต็อก</h1>
+                    <input type="text" id="search-stock" placeholder="ค้นหาสินค้าในสต็อก...">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product ID (ชิ้น)</th>
+                                <th>Stock Code</th>
+                                <th>คำอธิบาย</th>
+                                <th>จำนวน</th>
+                                <th>สถานที่</th>
+                                <th>Condition</th>
+                                <th>วันหมดอายุ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stock-table-body">
+                            <tr>
+                                <td>SN0000123</td>
+                                <td>PROD-001</td>
+                                <td>สินค้าตัวอย่าง A</td>
+                                <td>10</td>
+                                <td>Shelf A-1</td>
+                                <td>ใหม่</td>
+                                <td>N/A</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button id="btn-receive-stock">รับสินค้าเข้า</button>
+                    <button id="btn-issue-stock">จ่ายสินค้าออก</button>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            // --- Page Navigation ---
+            function showPage(pageId) {
+                $('.content-section').removeClass('active').hide();
+                $('#' + pageId).addClass('active').show();
+                $('#navbar a').removeClass('active');
+                $('#navbar a[data-page="' + pageId + '"]').addClass('active');
+            }
+
+            $('#navbar a').on('click', function (e) {
+                e.preventDefault();
+                const pageId = $(this).data('page');
+                if (pageId) {
+                    showPage(pageId);
+                }
+            });
+
+            // --- Login/Logout ---
+            $('#login-form').on('submit', function (e) {
+                e.preventDefault();
+                // Basic validation (in real app, check credentials)
+                const username = $('#username').val();
+                const password = $('#password').val();
+                if (username && password) {
+                    $('#login-page').hide();
+                    $('#main-app').show();
+                    showPage('dashboard-page'); // Show dashboard after login
+                } else {
+                    alert('กรุณากรอกชื่อผู้ใช้และรหัสผ่าน');
+                }
+            });
+
+            $('#logout-button').on('click', function (e) {
+                e.preventDefault();
+                $('#main-app').hide();
+                $('#login-page').show();
+                $('#username').val(''); // Clear login form
+                $('#password').val('');
+            });
+
+            // --- Customer Management ---
+            $('#btn-add-customer').on('click', function () {
+                $('#customer-form-title').text('เพิ่มลูกค้าใหม่');
+                $('#customer-form')[0].reset(); // Clear form
+                $('#customer-id').val(''); // Clear hidden ID
+                resetCustomerFormTabs();
+                showPage('customer-form-page');
+            });
+
+            // Placeholder for edit customer
+            $('#customer-table-body').on('click', '.btn-edit-customer', function () {
+                const customerId = $(this).data('id');
+                alert('แก้ไขลูกค้า ID: ' + customerId + ' (ยังไม่ได้ Implement)');
+                // In real app: fetch customer data, populate form, then showPage('customer-form-page');
+                $('#customer-form-title').text('แก้ไขข้อมูลลูกค้า');
+                // Example: $('#cust-company-name').val('Loaded Company Name');
+                resetCustomerFormTabs();
+                showPage('customer-form-page');
+            });
+
+            $('#btn-cancel-customer-form').on('click', function () {
+                showPage('customer-list-page');
+            });
+
+            $('#customer-form').on('submit', function (e) {
+                e.preventDefault();
+                alert('บันทึกข้อมูลลูกค้าแล้ว (Mockup)');
+                // In real app: collect data and send to server
+                showPage('customer-list-page');
+            });
+
+            // Customer Form Tabs
+            function resetCustomerFormTabs() {
+                $('#customer-form .tab-button').removeClass('active');
+                $('#customer-form .tab-content').removeClass('active').hide();
+                $('#customer-form .tab-button[data-tab="customer-tab-general"]').addClass('active');
+                $('#customer-tab-general').addClass('active').show();
+                $('#contact-person-list').html(`
+            <div class="contact-person-entry">
+                <input type="text" placeholder="ชื่อผู้ติดต่อ" class="contact-name">
+                <input type="text" placeholder="ตำแหน่ง" class="contact-position">
+                <input type="tel" placeholder="เบอร์โทร" class="contact-phone">
+                <input type="email" placeholder="อีเมล" class="contact-email">
+                <label><input type="checkbox" class="contact-is-keyman"> Keyman</label>
+            </div>`); // Reset contacts
+            }
+
+            $('#customer-form .tab-button').on('click', function () {
+                const tabId = $(this).data('tab');
+                $('#customer-form .tab-button').removeClass('active');
+                $(this).addClass('active');
+                $('#customer-form .tab-content').removeClass('active').hide();
+                $('#' + tabId).addClass('active').show();
+            });
+
+            $('#btn-add-contact-person').on('click', function () {
+                const contactEntryHtml = `
+            <div class="contact-person-entry">
+                <input type="text" placeholder="ชื่อผู้ติดต่อ" class="contact-name">
+                <input type="text" placeholder="ตำแหน่ง" class="contact-position">
+                <input type="tel" placeholder="เบอร์โทร" class="contact-phone">
+                <input type="email" placeholder="อีเมล" class="contact-email">
+                <label><input type="checkbox" class="contact-is-keyman"> Keyman</label>
+                <button type="button" class="btn-remove-contact" style="background-color: #dc3545; color:white; border:none; padding: 5px 8px; cursor:pointer;">ลบ</button>
+            </div>`;
+                $('#contact-person-list').append(contactEntryHtml);
+            });
+
+            $('#contact-person-list').on('click', '.btn-remove-contact', function () {
+                $(this).closest('.contact-person-entry').remove();
+            });
+
+
+            // --- Product Management ---
+            $('#btn-add-product').on('click', function () {
+                $('#product-form-title').text('เพิ่มสินค้าใหม่');
+                $('#product-form')[0].reset();
+                $('#product-id').val('');
+                showPage('product-form-page');
+            });
+
+            $('#product-table-body').on('click', '.btn-edit-product', function () {
+                const productId = $(this).data('id');
+                alert('แก้ไขสินค้า ID: ' + productId + ' (ยังไม่ได้ Implement)');
+                $('#product-form-title').text('แก้ไขข้อมูลสินค้า');
+                showPage('product-form-page');
+            });
+
+            $('#btn-cancel-product-form').on('click', function () {
+                showPage('product-list-page');
+            });
+
+            $('#product-form').on('submit', function (e) {
+                e.preventDefault();
+                alert('บันทึกข้อมูลสินค้าแล้ว (Mockup)');
+                showPage('product-list-page');
+            });
+
+
+            // --- Quotation Management ---
+            $('#btn-add-quotation').on('click', function () {
+                $('#quotation-form-title').text('สร้างใบเสนอราคาใหม่');
+                $('#quotation-form')[0].reset();
+                $('#quotation-id').val('');
+                // Reset items
+                $('#qtn-item-list').html(`
+            <div class="qtn-item">
+                <select class="qtn-product">
+                    <option value="prod001">สินค้าตัวอย่าง A (PROD-001)</option>
+                    <option value="prod002">สินค้าตัวอย่าง B (PROD-002)</option>
+                </select>
+                <input type="number" class="qtn-quantity" placeholder="จำนวน" min="1" value="1">
+                <input type="number" class="qtn-unit-price" placeholder="ราคาต่อหน่วย" step="0.01">
+                <span class="qtn-item-total">฿0.00</span>
+                <button type="button" class="btn-remove-qtn-item">ลบ</button>
+            </div>
+        `);
+                calculateQtnItemTotal(); // Calculate for the initial item
+                showPage('quotation-form-page');
+            });
+
+            $('#quotation-table-body').on('click', '.btn-edit-quotation', function () {
+                const qtnId = $(this).data('id');
+                alert('แก้ไขใบเสนอราคา ID: ' + qtnId + ' (ยังไม่ได้ Implement)');
+                $('#quotation-form-title').text('แก้ไขใบเสนอราคา');
+                showPage('quotation-form-page');
+            });
+
+            $('#btn-cancel-quotation-form').on('click', function () {
+                showPage('quotation-list-page');
+            });
+
+            $('#quotation-form').on('submit', function (e) {
+                e.preventDefault();
+                alert('บันทึกใบเสนอราคาแล้ว (Mockup)');
+                showPage('quotation-list-page');
+            });
+
+            $('#btn-add-qtn-item').on('click', function () {
+                const newItemHtml = `
+            <div class="qtn-item">
+                <select class="qtn-product">
+                    <option value="">-- เลือกสินค้า --</option>
+                    <option value="prod001">สินค้าตัวอย่าง A (PROD-001)</option>
+                    <option value="prod002">สินค้าตัวอย่าง B (PROD-002)</option>
+                    <option value="prod003">สินค้าตัวอย่าง C (PROD-003)</option>
+                </select>
+                <input type="number" class="qtn-quantity" placeholder="จำนวน" min="1" value="1">
+                <input type="number" class="qtn-unit-price" placeholder="ราคาต่อหน่วย" step="0.01">
+                <span class="qtn-item-total">฿0.00</span>
+                <button type="button" class="btn-remove-qtn-item">ลบ</button>
+            </div>`;
+                $('#qtn-item-list').append(newItemHtml);
+            });
+
+            $('#qtn-item-list').on('click', '.btn-remove-qtn-item', function () {
+                $(this).closest('.qtn-item').remove();
+                // Recalculate overall total if needed
+            });
+
+            // Calculate QTN item total
+            function calculateQtnItemTotal() {
+                $('#qtn-item-list .qtn-item').each(function () {
+                    const qty = parseFloat($(this).find('.qtn-quantity').val()) || 0;
+                    const price = parseFloat($(this).find('.qtn-unit-price').val()) || 0;
+                    const total = qty * price;
+                    $(this).find('.qtn-item-total').text('฿' + total.toFixed(2));
+                });
+                // Calculate overall QTN total here if needed
+            }
+            $('#qtn-item-list').on('input', '.qtn-quantity, .qtn-unit-price', calculateQtnItemTotal);
+
+
+            // --- Stock Management ---
+            // Placeholder for stock actions
+            $('#btn-receive-stock').on('click', function () {
+                alert('ฟอร์มรับสินค้าเข้า (ยังไม่ได้ Implement)');
+            });
+            $('#btn-issue-stock').on('click', function () {
+                alert('ฟอร์มจ่ายสินค้าออก (ยังไม่ได้ Implement)');
+            });
+
+
+            // Initialize: Hide main app, show login by default
+            $('#main-app').hide();
+            $('#login-page').show();
+            // If you want to bypass login for development:
+            // $('#login-page').hide();
+            // $('#main-app').show();
+            // showPage('dashboard-page');
+
+
+        }); // End document ready
+    </script>
+</body>
+
+</html>
